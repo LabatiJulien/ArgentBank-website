@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import './SignIn.css'; 
-import Navbar from '../../components/navbar/Navbar';
-import Footer from '../../components/footer/Footer';
 import axios from 'axios';
 
 const SignIn = () => {
@@ -53,7 +51,6 @@ const SignIn = () => {
 
   return (
     <> 
-    <Navbar />
     <main className="main bg-dark">
       <section className="sign-in-content">
         <i className="fa fa-user-circle sign-in-icon"></i>
@@ -77,7 +74,6 @@ const SignIn = () => {
         </form>
       </section>
     </main>
-    <Footer />
     </>
   );
 };

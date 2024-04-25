@@ -1,7 +1,7 @@
 import React from 'react';
 import './SignIn.css'; 
-import Navbar from '../components/navbar/Navbar';
-import Footer from '../components/footer/Footer';
+import Navbar from '../../components/navbar/Navbar';
+import Footer from '../../components/footer/Footer';
 
 const SignIn = () => {
   return (

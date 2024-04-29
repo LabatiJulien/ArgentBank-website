@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './SignIn.css'; 
+import './SignIn.css';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 const SignIn = () => {
@@ -8,6 +9,7 @@ const SignIn = () => {
     password: ''
   });
   const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,8 +21,8 @@ const SignIn = () => {
     if (validateForm()) {
       try {
         const response = await axios.post('http://localhost:3001/api/v1/user/login', formData);
-        console.log(response.data); 
-        
+        console.log(response.data);
+        dispatch({ type: 'LOGIN_SUCCESS', payload: { token: response.data.token } });
         window.location.href = '/profile';
       } catch (error) {
         console.error(error);
@@ -50,30 +52,30 @@ const SignIn = () => {
   };
 
   return (
-    <> 
-    <main className="main bg-dark">
-      <section className="sign-in-content">
-        <i className="fa fa-user-circle sign-in-icon"></i>
-        <h1>Sign In</h1>
-        {errors.email && <p className="error-message">{errors.email}</p>}
-        {errors.password && <p className="error-message">{errors.password}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="input-wrapper">
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
-          </div>
-          <div className="input-wrapper">
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
-          </div>
-          <div className="input-remember">
-            <input type="checkbox" id="remember-me" />
-            <label htmlFor="remember-me">Remember me</label>
-          </div>
-          <button type="submit" className="sign-in-button">Sign In</button>
-        </form>
-      </section>
-    </main>
+    <>
+      <main className="main bg-dark">
+        <section className="sign-in-content">
+          <i className="fa fa-user-circle sign-in-icon"></i>
+          <h1>Sign In</h1>
+          {errors.email && <p className="error-message">{errors.email}</p>}
+          {errors.password && <p className="error-message">{errors.password}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="input-wrapper">
+              <label htmlFor="email">Email</label>
+              <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
+            </div>
+            <div className="input-wrapper">
+              <label htmlFor="password">Password</label>
+              <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
+            </div>
+            <div className="input-remember">
+              <input type="checkbox" id="remember-me" />
+              <label htmlFor="remember-me">Remember me</label>
+            </div>
+            <button type="submit" className="sign-in-button">Sign In</button>
+          </form>
+        </section>
+      </main>
     </>
   );
 };

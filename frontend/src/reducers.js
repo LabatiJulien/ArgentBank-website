@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { createSlice } from '@reduxjs/toolkit';
 
 const authSlice = createSlice({
@@ -13,9 +12,5 @@ const authSlice = createSlice({
   },
 });
 
-const rootReducer = combineReducers({
-  auth: authSlice.reducer,
-});
-
 export const { loginSuccess } = authSlice.actions;
-export default rootReducer;
+export default authSlice.reducer;

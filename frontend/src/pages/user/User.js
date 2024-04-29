@@ -46,12 +46,7 @@ const User = () => {
               </div>
             </section>
           </div>
-        ) : (
-          <div className="header">
-            <h1>Welcome to Argent Bank!</h1>
-            <p className="subtitle">Please sign in</p>
-          </div>
-        )}
+        ) : null}
       </main>
     </>
   );

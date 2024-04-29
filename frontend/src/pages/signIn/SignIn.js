@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './SignIn.css';
 import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../reducers'; 
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; 
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ const SignIn = () => {
   });
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,8 +25,9 @@ const SignIn = () => {
       try {
         const response = await axios.post('http://localhost:3001/api/v1/user/login', formData);
         console.log(response.data);
-        dispatch({ type: 'LOGIN_SUCCESS', payload: { token: response.data.token } });
-        window.location.href = '/profile';
+        console.log(response.data.body.token);
+        dispatch(loginSuccess({ token: response.data.body.token }));
+        navigate('/profile'); 
       } catch (error) {
         console.error(error);
       }

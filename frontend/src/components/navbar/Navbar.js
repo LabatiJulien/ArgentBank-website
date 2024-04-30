@@ -1,14 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../reducers';
 
 const Navbar = () => {
-  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate('/');
   };
 
   return (
@@ -22,7 +24,7 @@ const Navbar = () => {
       </Link>
       <div>
         {token ? (
-          <button className="main-nav-item" onClick={handleLogout}>
+          <button onClick={handleLogout} className="main-nav-item">
             <i className="fa fa-sign-out"></i>
             Sign Out
           </button>

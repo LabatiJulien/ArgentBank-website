@@ -1,5 +1,5 @@
 import React from 'react';
-import './User.css';
+import '../../Css/Global.css';
 import { useSelector } from 'react-redux';
 
 const User = () => {

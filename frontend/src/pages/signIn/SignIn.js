@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './SignIn.css';
+import '../../Css/Global.css';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../reducers'; 
 import axios from 'axios';

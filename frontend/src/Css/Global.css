@@ -1,5 +1,3 @@
-/* Global.css */
-
 html {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -60,6 +58,13 @@ html {
   
   .main-nav-item:hover {
     text-decoration: underline;
+  }
+
+  .main-nav button {
+    font-weight: bold;
+    color: #2c3e50;
+  border: none;
+  background-color: transparent;
   }
   
   .main-nav-logo {
@@ -155,6 +160,18 @@ html {
   }
   
   .sign-in-button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    border-color: #00bc77;
+    background-color: #00bc77;
+    color: #fff;
+  }
+
+  .sign-out-button {
     display: block;
     width: 100%;
     padding: 8px;

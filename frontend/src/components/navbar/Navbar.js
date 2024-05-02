@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../reducers';
+import { logout } from '../../redux/reducers';
+import '../../Css/Global.css';
+
 
 const Navbar = () => {
   const token = useSelector(state => state.auth.token);
@@ -53,7 +55,7 @@ const Navbar = () => {
         {token ? (
           <div>
             <button onClick={handleLogout} className="main-nav-item">
-              <i className="fa fa-sign-out"></i>
+              <i className="fa fa-user-circle"></i>
               Sign Out
             </button>
             <span className="main-nav-item">{userName}</span>

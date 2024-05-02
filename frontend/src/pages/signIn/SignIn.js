@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../Css/Global.css';
 import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../../reducers'; 
+import { loginSuccess } from '../../redux/reducers'; 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
 

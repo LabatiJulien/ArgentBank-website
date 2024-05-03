@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import '../../Css/Global.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser } from '../../redux/reducers'; 
+import { updateUserAsync } from '../../redux/reducers'; 
 
 const User = () => {
   const token = useSelector(state => state.auth.token);
   const user = useSelector(state => state.auth.user);
-  const [editName, setEditName] = useState(false);
-  const [newName, setNewName] = useState(user?.firstName || '');
+  const [editUsername, setEditUsername] = useState(false);
+  const [newUsername, setNewUsername] = useState(user?.userName || '');
   const dispatch = useDispatch();
 
-  const toggleEditName = () => {
-    setEditName(!editName);
+  const toggleEditUsername = () => {
+    setEditUsername(!editUsername);
   };
 
   const handleChange = (e) => {
-    setNewName(e.target.value);
+    setNewUsername(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(setUser({ ...user, firstName: newName })); 
-    toggleEditName(); 
+    dispatch(updateUserAsync({ ...user, userName: newUsername, token })); 
+    toggleEditUsername(); 
   };
 
   return (
@@ -30,15 +30,15 @@ const User = () => {
         {token ? (
           <div>
             <div className="header">
-              {editName ? (
+              {editUsername ? (
                 <form onSubmit={handleSubmit}>
-                  <input type="text" placeholder="Enter your name" value={newName} onChange={handleChange} />
+                  <input type="text" placeholder="Enter your username" value={newUsername} onChange={handleChange} />
                   <button type="submit">Save</button>
                 </form>
               ) : (
                 <>
-                  <h1>Welcome back<br />{user?.firstName} {user?.lastName}!</h1>
-                  <button className="edit-button" onClick={toggleEditName}>Edit Name</button>
+                  <h1>Welcome back, {user?.userName}!</h1>
+                  <button className="edit-button" onClick={toggleEditUsername}>Edit Username</button>
                 </>
               )}
             </div>

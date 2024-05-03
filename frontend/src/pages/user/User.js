@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../Css/Global.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../../redux/reducers'; 
 
 const User = () => {
   const token = useSelector(state => state.auth.token);
+  const user = useSelector(state => state.auth.user);
+  const [editName, setEditName] = useState(false);
+  const [newName, setNewName] = useState(user?.firstName || '');
+  const dispatch = useDispatch();
+
+  const toggleEditName = () => {
+    setEditName(!editName);
+  };
+
+  const handleChange = (e) => {
+    setNewName(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(setUser({ ...user, firstName: newName })); 
+    toggleEditName(); 
+  };
 
   return (
     <>
@@ -11,8 +30,17 @@ const User = () => {
         {token ? (
           <div>
             <div className="header">
-              <h1>Welcome back<br />Tony Jarvis!</h1>
-              <button className="edit-button">Edit Name</button>
+              {editName ? (
+                <form onSubmit={handleSubmit}>
+                  <input type="text" placeholder="Enter your name" value={newName} onChange={handleChange} />
+                  <button type="submit">Save</button>
+                </form>
+              ) : (
+                <>
+                  <h1>Welcome back<br />{user?.firstName} {user?.lastName}!</h1>
+                  <button className="edit-button" onClick={toggleEditName}>Edit Name</button>
+                </>
+              )}
             </div>
             <h2 className="sr-only">Accounts</h2>
             <section className="account">

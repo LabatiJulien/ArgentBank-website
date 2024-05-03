@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+// Navbar.js
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../redux/reducers';
+import { logout, setUser } from '../../redux/reducers';
 import '../../Css/Global.css';
-
 
 const Navbar = () => {
   const token = useSelector(state => state.auth.token);
-  const [userName, setUserName] = useState('');
+  const userName = useSelector(state => state.auth.user?.firstName); 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const Navbar = () => {
         });
         const data = await response.json();
         if (response.ok) {
-          setUserName(data.body.firstName); 
+          dispatch(setUser(data.body)); 
         } else {
           console.error('Failed to fetch user profile:', data.message);
         }
@@ -35,7 +35,7 @@ const Navbar = () => {
     if (token) {
       fetchUserProfile();
     }
-  }, [token]);
+  }, [token, dispatch]);
 
   const handleLogout = () => {
     dispatch(logout());

@@ -18,6 +18,11 @@ const User = () => {
     setNewUsername(e.target.value);
   };
 
+  const handleCancel = () => {
+    setNewUsername(user?.userName || ''); 
+    toggleEditUsername(); 
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUserAsync({ ...user, userName: newUsername, token })); 
@@ -33,7 +38,10 @@ const User = () => {
               {editUsername ? (
                 <form onSubmit={handleSubmit}>
                   <input type="text" placeholder="Enter your username" value={newUsername} onChange={handleChange} />
-                  <button type="submit">Save</button>
+                  <div>
+                    <button type="submit" className="edit-button">Save</button>
+                    <button type="button" onClick={handleCancel} className="edit-button">Cancel</button> 
+                  </div>
                 </form>
               ) : (
                 <>

@@ -11,16 +11,23 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
 }
 
 .main {
   flex: 1;
 }
 
-.bg-dark {
+.bg-dark::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-color: #12002b;
+  z-index: -1;
 }
-
 .sr-only {
   border: 0 !important;
   clip: rect(1px, 1px, 1px, 1px) !important;
@@ -40,6 +47,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 5px 20px;
+  background-color: white;
 }
 
 .main-nav a {
@@ -192,7 +200,7 @@ body {
   background-color: white;
   width: 300px;
   margin: 0 auto;
-  margin-top: 3rem;
+  margin-top: 6rem;
   padding: 2rem;
 }
 

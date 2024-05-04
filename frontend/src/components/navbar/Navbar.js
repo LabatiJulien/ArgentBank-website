@@ -1,9 +1,9 @@
-// Navbar.js
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, setUser } from '../../redux/reducers';
 import '../../Css/Global.css';
+import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa'; 
 
 const Navbar = () => {
   const token = useSelector(state => state.auth.token);
@@ -55,15 +55,15 @@ const Navbar = () => {
         {token ? (
           <div>
             <button onClick={handleLogout} className="main-nav-item">
-              <i className="fa fa-user-circle"></i>
-              Sign Out
+              <FaSignOutAlt/>
+              <span style={{ marginLeft: '5px' }}>Sign Out</span>
             </button>
             <span className="main-nav-item">{userName}</span>
           </div>
         ) : (
           <Link to="/login" className="main-nav-item">
-            <i className="fa fa-user-circle"></i>
-            Sign In
+            <FaUserCircle />
+            <span style={{ marginLeft: '5px' }}>Sign In</span>
           </Link>
         )}
       </div>

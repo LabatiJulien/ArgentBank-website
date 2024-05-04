@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../../redux/reducers'; 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
+import { FaUserCircle } from 'react-icons/fa'; 
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -59,7 +60,7 @@ const SignIn = () => {
     <>
       <main className="main bg-dark">
         <section className="sign-in-content">
-          <i className="fa fa-user-circle sign-in-icon"></i>
+        <FaUserCircle />
           <h1>Sign In</h1>
           {errors.email && <p className="error-message">{errors.email}</p>}
           {errors.password && <p className="error-message">{errors.password}</p>}

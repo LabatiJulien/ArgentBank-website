@@ -54,11 +54,12 @@ const Navbar = () => {
       <div>
         {token ? (
           <div>
+            <FaUserCircle />
+            <span className="main-nav-item" style={{ marginLeft: '5px' }}>{userName}</span> 
             <button onClick={handleLogout} className="main-nav-item">
-              <FaSignOutAlt/>
+              <FaSignOutAlt />
               <span style={{ marginLeft: '5px' }}>Sign Out</span>
             </button>
-            <span className="main-nav-item">{userName}</span>
           </div>
         ) : (
           <Link to="/login" className="main-nav-item">

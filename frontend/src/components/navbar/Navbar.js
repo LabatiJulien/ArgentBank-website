@@ -7,7 +7,7 @@ import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 
 const Navbar = () => {
   const token = useSelector(state => state.auth.token);
-  const userName = useSelector(state => state.auth.user?.firstName); 
+  const userName = useSelector(state => state.auth.user?.userName); 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

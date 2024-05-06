@@ -33,6 +33,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
   /user/signup:
     post:
       tags:
@@ -57,6 +58,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
   /user/profile:
     post:
       security:
@@ -65,11 +67,9 @@ paths:
         - User Module
       summary: User Profile API
       description: API for fetching a user profile
-      #produces:
-       # - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -94,18 +94,124 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
+  /transactions:
+    get:
+      tags:
+        - Transaction Module
+      summary: Get Transactions
+      description: Retrieve all transactions for the current month, grouped by account
+      parameters:
+        - name: month
+          in: query
+          description: The month for which transactions are requested (format: YYYY-MM)
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: List of transactions for the month
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid month format
+        '500':
+          description: Internal Server Error
+
+  /transactions/{transactionId}:
+    get:
+      tags:
+        - Transaction Module
+      summary: Get Transaction Details
+      description: Retrieve details of a specific transaction
+      parameters:
+        - name: transactionId
+          in: path
+          description: ID of the transaction to retrieve details for
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Details of the transaction
+          schema:
+            $ref: '#/definitions/Transaction'
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+
+    put:
+      tags:
+        - Transaction Module
+      summary: Update Transaction
+      description: Update information of a specific transaction
+      parameters:
+        - in: path
+          name: transactionId
+          description: ID of the transaction to update
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Transaction data to update
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionUpdate'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction updated successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+
+    delete:
+      tags:
+        - Transaction Module
+      summary: Delete Transaction
+      description: Delete a specific transaction
+      parameters:
+        - in: path
+          name: transactionId
+          description: ID of the transaction to delete
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction deleted successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+
 securityDefinitions:
   Bearer:
     type: apiKey
     name: Authorization
     in: header
+
 definitions:
   User:
     properties:
@@ -124,6 +230,7 @@ definitions:
       userName:
         type: string
         description: user public name
+
   Login:
     properties:
       email:
@@ -132,6 +239,7 @@ definitions:
       password:
         type: string
         description: user password
+
   ApiResponse:
     type: object
     properties:
@@ -146,13 +254,38 @@ definitions:
             type: string
           email:
             type: string
+
   LoginResponse:
     type: object
     properties:
       token:
         type: string
+
   UserProfile:
     type: object
     properties:
       userName:
+        type: string
+
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+      accountId:
+        type: string
+      amount:
+        type: number
+      date:
+        type: string
+        format: date
+      description:
+        type: string
+
+  TransactionUpdate:
+    type: object
+    properties:
+      amount:
+        type: number
+      description:
         type: string

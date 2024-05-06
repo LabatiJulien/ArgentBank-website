@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import axios from 'axios';
 
 const authSlice = createSlice({
@@ -23,7 +25,7 @@ const authSlice = createSlice({
 
 export const { loginSuccess, logout, setUser } = authSlice.actions;
 
-// Action asynchrone pour mettre à jour l'utilisateur
+
 export const updateUserAsync = (newUserData) => async (dispatch) => {
   try {
     const response = await axios.put('http://localhost:3001/api/v1/user/profile', newUserData, {
@@ -34,8 +36,15 @@ export const updateUserAsync = (newUserData) => async (dispatch) => {
     dispatch(setUser(response.data.body)); 
   } catch (error) {
     console.error('Error updating user:', error);
-  
   }
 };
 
-export default authSlice.reducer;
+
+const persistConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['token', 'user'], 
+};
+const persistedAuthSlice = persistReducer(persistConfig, authSlice.reducer);
+
+export default persistedAuthSlice;

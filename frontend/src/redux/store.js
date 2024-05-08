@@ -4,18 +4,21 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import reducers from './reducers'; 
 
+// Combinaison des reducers
 const rootReducer = combineReducers({
-  auth: reducers,
+  auth: reducers, // Reducer pour l'authentification
 });
-
+// Configuration de la persistance des données du store
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'], 
+  whitelist: ['auth'], // Seuls les états authentification sont persistés
 };
 
+// Création du reducer persistant
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+// Configuration et création du store
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>

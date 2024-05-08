@@ -6,14 +6,24 @@ import '../../Css/Global.css';
 import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa'; 
 
 const Navbar = () => {
+  // Utilisation de useSelector pour accéder au token et au profil utilisateur
   const token = useSelector(state => state.auth.token);
-  const userName = useSelector(state => state.auth.user?.userName); 
+  const user = useSelector(state => state.auth.user); 
+
+  // Utilisation de useDispatch pour dispatch les actions Redux
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
+      // Si l'utilisateur est déjà présent dans le store Redux, pas besoin de refaire la requête
+      if (user) {
+        return;
+      }
+      
       try {
+        // Appel à l'API pour récupérer le profil utilisateur
         const response = await fetch('http://localhost:3001/api/v1/user/profile', {
           method: 'POST',
           headers: {
@@ -22,6 +32,8 @@ const Navbar = () => {
           },
         });
         const data = await response.json();
+        
+        // Si la réponse est OK, on met à jour le store Redux avec les données du profil
         if (response.ok) {
           dispatch(setUser(data.body)); 
         } else {
@@ -32,14 +44,16 @@ const Navbar = () => {
       }
     };
 
+    // Si un token est présent, on charge le profil utilisateur
     if (token) {
       fetchUserProfile();
     }
-  }, [token, dispatch]);
+  }, [token, user, dispatch]);
 
+  // Fonction pour gérer la déconnexion de l'utilisateur
   const handleLogout = () => {
-    dispatch(logout());
-    navigate('/');
+    dispatch(logout()); // Dispatch l'action de déconnexion
+    navigate('/'); 
   };
 
   return (
@@ -52,19 +66,20 @@ const Navbar = () => {
         />
       </Link>
       <div>
-        {token ? (
+        {/* Si un token est présent, affiche le nom d'utilisateur et le bouton de déconnexion */}
+        {token && user ? (
           <div>
-            <FaUserCircle />
-            <span className="main-nav-item" style={{ marginLeft: '5px' }}>{userName}</span> 
+            <FaUserCircle /> 
+            <span className="main-nav-item" style={{ marginLeft: '5px' }}>{user.userName}</span> 
             <button onClick={handleLogout} className="main-nav-item">
-              <FaSignOutAlt />
-              <span style={{ marginLeft: '5px' }}>Sign Out</span>
+              <FaSignOutAlt /> 
+              <span style={{ marginLeft: '5px' }}>Sign Out</span> 
             </button>
           </div>
         ) : (
           <Link to="/login" className="main-nav-item">
-            <FaUserCircle />
-            <span style={{ marginLeft: '5px' }}>Sign In</span>
+            <FaUserCircle /> 
+            <span style={{ marginLeft: '5px' }}>Sign In</span> 
           </Link>
         )}
       </div>

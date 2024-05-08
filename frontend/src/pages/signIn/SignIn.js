@@ -15,26 +15,13 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
 
+  // Gestion des changements dans les champs de formulaire
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      try {
-        const response = await axios.post('http://localhost:3001/api/v1/user/login', formData);
-        console.log(response.data);
-        console.log(response.data.body.token);
-        dispatch(loginSuccess({ token: response.data.body.token }));
-        navigate('/profile'); 
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
-
+  // Validation du formulaire
   const validateForm = () => {
     let errors = {};
     let isValid = true;
@@ -56,11 +43,25 @@ const SignIn = () => {
     return isValid;
   };
 
+  // Soumission du formulaire
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      try {
+        const response = await axios.post('http://localhost:3001/api/v1/user/login', formData);
+        dispatch(loginSuccess({ token: response.data.body.token }));
+        navigate('/profile'); 
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <>
       <main className="main bg-dark">
         <section className="sign-in-content">
-        <FaUserCircle />
+          <FaUserCircle />
           <h1>Sign In</h1>
           {errors.email && <p className="error-message">{errors.email}</p>}
           {errors.password && <p className="error-message">{errors.password}</p>}

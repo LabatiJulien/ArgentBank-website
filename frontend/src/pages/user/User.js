@@ -4,12 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateUserAsync } from '../../redux/reducers'; 
 
 const User = () => {
+  // Récupération des données de l'utilisateur depuis Redux
   const token = useSelector(state => state.auth.token);
   const user = useSelector(state => state.auth.user);
+  // Gestion de l'édition du nom d'utilisateur
   const [editUsername, setEditUsername] = useState(false);
   const [newUsername, setNewUsername] = useState(user?.userName || '');
   const dispatch = useDispatch();
 
+  // Basculer l'état d'édition du nom d'utilisateur
   const toggleEditUsername = () => {
     setEditUsername(!editUsername);
   };
@@ -23,6 +26,7 @@ const User = () => {
     toggleEditUsername(); 
   };
 
+    // Soumission du formulaire de modification du nom d'utilisateur
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUserAsync({ ...user, userName: newUsername, token })); 
